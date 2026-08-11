@@ -1,0 +1,6 @@
+@realtor_notes_backend_HostAddress = http://localhost:5215
+
+GET {{realtor_notes_backend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
