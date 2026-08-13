@@ -11,5 +11,5 @@ public class EventSchedule
     public int RepeatCount { get; set; }
     
     public DateTimeOffset? EndDate { get; set; } // Если null, повторяется бесконечно
-    public DateTimeOffset LastMaterializedDate { get; set; } // До какой даты мы уже сгенерировали события
+    public DateTimeOffset? LastMaterializedDate { get; set; } // До какой даты мы уже сгенерировали события
 }

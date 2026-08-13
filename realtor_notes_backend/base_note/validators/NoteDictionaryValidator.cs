@@ -1,0 +1,36 @@
+﻿using FluentValidation;
+using realtor_notes_backend.base_note.consts;
+using realtor_notes_backend.base_note.dto;
+using realtor_notes_backend.base_note.model;
+
+namespace realtor_notes_backend.base_note.service;
+
+public class NoteDictionaryValidator : AbstractValidator<CreateNoteDictionary>
+{
+    public NoteDictionaryValidator()
+    {
+        RuleFor(x => x.NoteLabel)
+            .Must((dictionary, i, arg3) => NoteLabel.TryFromId(i, out _)).WithMessage("Не опознан идентификатор поля");
+        RuleFor(x => x.NoteType)
+            .Must((dictionary, i, arg3) => NoteType.TryFromId(i, out _)).WithMessage("Не опознан тип заметки");
+        RuleFor(x => x.Value)
+            .NotEmpty().WithMessage("Значение не может быть пустым")
+            .Length(1, 50).WithMessage("Длина должна быть до 50 символов");
+
+        When(x => x.NoteLabel == BaseNoteLabel.STATUS.Id, () =>
+        {
+            RuleFor(x => x.IsCloseNoteForStatus)
+                .NotEmpty()
+                .WithMessage("Параметр IsClose должен быть задан для статуса");
+        });
+        
+        When(x => x.NoteLabel == BaseNoteLabel.EVENT_STATE.Id, () =>
+        {
+            RuleFor(x => x.StateMoodForState)
+                .NotEmpty()
+                .WithMessage("Параметр StateMood должен быть задан для состояния события")
+                .IsInEnum()
+                .WithMessage("Параметр StateMood не указывает на реальное значение");
+        });
+    }
+}

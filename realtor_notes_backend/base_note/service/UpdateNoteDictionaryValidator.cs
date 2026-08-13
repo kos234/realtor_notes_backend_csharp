@@ -1,12 +1,12 @@
-﻿using FluentValidation;
+using FluentValidation;
 using realtor_notes_backend.base_note.dto;
 using realtor_notes_backend.base_note.model;
 
 namespace realtor_notes_backend.base_note.service;
 
-public class NoteDictionaryValidator : AbstractValidator<CreateNoteDictionary>
+public class UpdateNoteDictionaryValidator : AbstractValidator<UpdateNoteDictionary>
 {
-    public NoteDictionaryValidator()
+    public UpdateNoteDictionaryValidator()
     {
         RuleFor(x => x.NoteLabel)
             .Must((dictionary, i, arg3) => NoteLabel.TryFromId(i, out _)).WithMessage("Не опознан идентификатор поля");
